@@ -12,51 +12,21 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
+import drawings.Block;
 import drawings.Entity;
 import drawings.EntityManager;
 
 public class Canvas extends JPanel{
 
-	List<Entity> items;
-	int length=1000;
-	int start= 0;
-	int end=540;
-	Entity drag;
-	float px;
-	float py;
+	
+	private int length=1000;
+	private int start= 0;
+	private int end=540;
 	EntityManager m = new EntityManager();
 	public Canvas(){
 		setBackground(Color.WHITE);
-		items = new LinkedList<Entity>();
 		setPreferredSize(new Dimension(length,480));
 		addMouseListener(new MouseAdapter() {
-			
-			/*@Override
-			public void mouseReleased(MouseEvent event) {
-				
-				Point p = event.getPoint();
-				for(Entity e:items){
-					if(e.getRect().contains(p)){
-						e.drop();
-						
-						break;
-					}
-						
-				}
-			}
-			
-			@Override
-			public void mousePressed(MouseEvent event) {
-				
-				Point p = event.getPoint();
-				for(Entity e:items){
-					if(e.getRect().contains(p)){
-						e.drag();	
-						break;
-					}
-						
-				}
-			}*/
 				
 			@Override
 			public void mouseClicked(MouseEvent event) {
@@ -68,13 +38,7 @@ public class Canvas extends JPanel{
 		});
 		
 		addMouseMotionListener(new MouseMotionAdapter() {
-			
-			/*@Override
-			public void mouseMoved(MouseEvent arg0) {
-				// TODO Auto-generated method stub
-				
-			}*/
-			
+
 			@Override
 			public void mouseDragged(MouseEvent event) {
 				
@@ -94,9 +58,7 @@ public class Canvas extends JPanel{
 		
 	}
 	
-	public List<Entity> getItems() {
-		return items;
-	}
+	
 	public int getLength() {
 		return length;
 	}
@@ -129,7 +91,7 @@ public class Canvas extends JPanel{
 
 
 	public void addRect() {
-		m.addEntity(new Entity(start+50,50));
+		m.addEntity(new Block(start+50,50));
 		
 	}
 	

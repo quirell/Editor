@@ -2,5 +2,5 @@ package drawings;
 
 public enum Type {
 
-	BLOCK,MOB;
+	BLOCK,ENEMY,PLATFORM;
 }

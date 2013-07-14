@@ -101,13 +101,7 @@ public class EntityManager {
 			data.writeInt(length);
 			data.writeInt(items.size());
 			for(Entity e:items){
-				Rectangle2D.Float r = e.getRect();
-				data.writeInt(e.getType().ordinal());
-				data.writeFloat(r.x);
-				data.writeFloat(r.y);
-				data.writeFloat(r.width);
-				data.writeFloat(r.height);
-				
+				e.saveMe(data);
 			}
 			System.out.println("saved");
 			data.flush();
@@ -127,13 +121,23 @@ public class EntityManager {
 			length = data.readInt();
 			System.out.println("l: "+length);
 			items = new LinkedList<Entity>();
-			float x,y,width,height;
 			int l = data.readInt();
 			for(int i = 0;i<l;i++){
 				Type t = Type.values()[data.readInt()];
-				Entity e = new Entity(data.readFloat(),data.readFloat(),data.readFloat(),data.readFloat());
-				e.setType(t);
+				Entity e;
+				switch(t){
+				case BLOCK: e = new Block(data);
+					break;
+				case PLATFORM: e = new Platform(data);
+					break;
+				case ENEMY: e = new Enemy(data);
+					break;
+				default:
+					e = null;
+				
+				}
 				items.add(e);
+				
 			}
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block

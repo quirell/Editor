@@ -8,27 +8,39 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-public class Block extends Entity{
 
-	public Block(){
-		type = Type.BLOCK;
-		
+public class Enemy extends Entity{
+
+	
+	public Enemy(){
+		super();
+		type = Type.ENEMY;
 	}
 	
-	public Block(float x, float y, float width, float height){
-		super(x,y,width,height);
-		type = Type.BLOCK;
+	public Enemy(float x,float y){
+		super(x,y);
+		type = Type.ENEMY;
 	}
-	public Block(float x, float y) {
-		pos.x = x;
-		pos.y = y;
-		pos.width = 50;
-		pos.height = 50;
-	}
-	public Block(DataInputStream stream) throws IOException{
+	public Enemy(DataInputStream stream) throws IOException{
 		super(stream);
-		type = Type.BLOCK;
+		type = Type.ENEMY;
+		
 	}
+
+	@Override
+	public void draw(Graphics2D g) {
+
+		g.setColor(Color.RED);
+		Rectangle r = pos.getBounds();
+		g.drawOval(r.x, r.y, r.width, r.height);
+		if (draggable) {
+			g.setColor(Color.GRAY);
+			g.setStroke(new BasicStroke(3));
+			g.drawOval(r.x, r.y, r.width, r.height);
+		}
+		
+	}
+
 	@Override
 	public Object[] getAllData() {
 		
@@ -38,19 +50,6 @@ public class Block extends Entity{
 		t[2] = pos.width;
 		t[3] = pos.height;
 		return t;
-	}
-	
-	@Override
-	public void draw(Graphics2D g) {
-
-		g.setColor(Color.black);
-		Rectangle r = pos.getBounds();
-		g.fillRect(r.x, r.y, r.width, r.height);
-		if (draggable) {
-			g.setColor(Color.GRAY);
-			g.setStroke(new BasicStroke(3));
-			g.drawRect(r.x, r.y, r.width, r.height);
-		}
 	}
 
 	@Override
@@ -63,7 +62,4 @@ public class Block extends Entity{
 		stream.writeFloat(pos.height);
 		
 	}
-
-	
-	
 }
